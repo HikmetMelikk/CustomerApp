@@ -7,6 +7,8 @@ abstract class CustomerRepo {
   Future<List<Customers>> getCustomers();
   Future<Customers> addCustomer(String customerName, String customerPhone, String customerAddress, String customerEmail,
       String orderName, String orderId);
+  Future<Customers> updateCustomer(String customerId, String customerName, String customerPhone, String customerAddress,
+      String customerEmail, String orderName, String orderId);
 }
 
 final class SampleCustomersRepo implements CustomerRepo {
@@ -43,6 +45,30 @@ final class SampleCustomersRepo implements CustomerRepo {
       return Customers.fromJson(data);
     } else {
       throw NetworkError('Failed to add customer');
+    }
+  }
+
+  @override
+  Future<Customers> updateCustomer(String customerId, String customerName, String customerPhone, String customerAddress,
+      String customerEmail, String orderName, String orderId) async {
+    final response = await http.put(
+      Uri.parse('${CustomerConstants.baseUrl}/$customerId'), // Append customerId to the URL
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(<String, String>{
+        'customerName': customerName,
+        'customerPhone': customerPhone,
+        'customerAddress': customerAddress,
+        'customerEmail': customerEmail,
+        'orderName': orderName,
+        'orderId': orderId
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
+      return Customers.fromJson(data);
+    } else {
+      throw NetworkError('Failed to update customer');
     }
   }
 }

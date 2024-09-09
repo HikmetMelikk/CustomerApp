@@ -47,10 +47,10 @@ class _CustomersPageState extends State<CustomersPage> {
                         side: const BorderSide(color: Colors.blue),
                       ),
                       title: Text(
-                        customer.customerName ?? '',
+                        customer.customerName,
                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(customer.customerEmail ?? '', style: const TextStyle(fontSize: 16)),
+                      subtitle: Text(customer.customerEmail, style: const TextStyle(fontSize: 16)),
                     ),
                     const SizedBox(height: 8),
                   ],

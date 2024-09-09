@@ -12,16 +12,16 @@ final class Customers {
     required this.v,
   });
 
-  final String? id;
-  final String? customerName;
-  final String? customerPhone;
-  final String? customerAddress;
-  final String? customerEmail;
-  final String? orderName;
-  final int? orderId;
+  final String id;
+  final String customerName;
+  final String customerPhone;
+  final String customerAddress;
+  final String customerEmail;
+  final String orderName;
+  final String orderId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? v;
+  final int v;
 
   Customers copyWith({
     String? id,
@@ -30,7 +30,7 @@ final class Customers {
     String? customerAddress,
     String? customerEmail,
     String? orderName,
-    int? orderId,
+    String? orderId,
     DateTime? createdAt,
     DateTime? updatedAt,
     int? v,

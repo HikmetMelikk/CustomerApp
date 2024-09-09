@@ -1,78 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-
+import 'package:customer_app/product/models/customer_model.dart';
+import 'package:customer_app/product/repo/customer_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-Future<Album> fetchAlbum() async {
-  final response = await http.get(
-    Uri.parse('http://192.168.1.59:3000/api/customer/64ea4ad627a8bc2532d692dd'),
-  );
-
-  if (response.statusCode == 200) {
-    return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-  } else {
-    throw Exception('Failed to load album');
-  }
-}
-
-Future<Album> updateAlbum(
-  String customerName,
-  String customerPhone,
-  String customerAddress,
-  String customerEmail,
-  String orderName,
-  String orderId,
-) async {
-  final response = await http.put(
-    Uri.parse('http://192.168.1.49:3000/api/customer/64ea4ad627a8bc2532d692dd'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'customerName': customerName,
-      'customerPhone': customerPhone,
-      'customerAddress': customerAddress,
-      'customerEmail': customerEmail,
-      'orderName': orderName,
-      'orderId': orderId
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    return Album.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to update album.');
-  }
-}
-
-class Album {
-  final String customerName;
-  final String customerPhone;
-  final String customerAddress;
-  final String customerEmail;
-  final String orderName;
-  final String orderId;
-
-  const Album(
-      {required this.customerName,
-      required this.customerPhone,
-      required this.customerAddress,
-      required this.customerEmail,
-      required this.orderName,
-      required this.orderId});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      customerName: json["customerName"],
-      customerPhone: json["customerPhone"],
-      customerAddress: json["customerAddress"],
-      customerEmail: json["customerEmail"],
-      orderName: json["orderName"],
-      orderId: json["orderId"],
-    );
-  }
-}
 
 class UpdateCustomerPage extends StatefulWidget {
   const UpdateCustomerPage({super.key});
@@ -84,111 +12,135 @@ class UpdateCustomerPage extends StatefulWidget {
 }
 
 class _UpdateCustomerPageState extends State<UpdateCustomerPage> {
-  final TextEditingController _controller = TextEditingController();
-  final TextEditingController _controller1 = TextEditingController();
-  final TextEditingController _controller2 = TextEditingController();
-  final TextEditingController _controller3 = TextEditingController();
-  final TextEditingController _controller4 = TextEditingController();
-  final TextEditingController _controller5 = TextEditingController();
-  late Future<Album> _futureAlbum;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _orderNameController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
+
+  late SampleCustomersRepo _customersRepo;
+  List<Customers> _customers = [];
+  Customers? _selectedCustomer;
 
   @override
   void initState() {
     super.initState();
-    _futureAlbum = fetchAlbum();
+    _customersRepo = SampleCustomersRepo();
+    _fetchCustomers();
+  }
+
+  Future<void> _fetchCustomers() async {
+    try {
+      final customers = await _customersRepo.getCustomers();
+      setState(() {
+        _customers = customers;
+      });
+    } catch (e) {
+      // Handle error
+      print('Failed to load customers: $e');
+    }
+  }
+
+  void _onCustomerSelected(String? customerId) {
+    if (customerId != null) {
+      final customer = _customers.firstWhere((c) => c.id == customerId);
+      setState(() {
+        _selectedCustomer = customer;
+        _nameController.text = customer.customerName;
+        _phoneController.text = customer.customerPhone;
+        _addressController.text = customer.customerAddress;
+        _emailController.text = customer.customerEmail;
+        _orderNameController.text = customer.orderName;
+        _idController.text = customer.orderId; // Ensure orderId is a String
+      });
+    }
+  }
+
+  Future<void> _updateCustomer() async {
+    if (_selectedCustomer != null) {
+      try {
+        await _customersRepo.updateCustomer(
+          _selectedCustomer!.id,
+          _nameController.text,
+          _phoneController.text,
+          _addressController.text,
+          _emailController.text,
+          _orderNameController.text,
+          _idController.text,
+        );
+      } catch (e) {
+        throw NetworkError('Failed to update customer');
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Update Customer Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(child: Text('Update Customer Page')),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text('Update Customer Page')),
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(8),
-          child: FutureBuilder<Album>(
-            future: _futureAlbum,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(snapshot.data!.customerName),
-                        TextField(
-                          controller: _controller,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Customer Name',
-                          ),
-                        ),
-                        Text(snapshot.data!.customerPhone),
-                        TextField(
-                          controller: _controller1,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Customer Phone',
-                          ),
-                        ),
-                        Text(snapshot.data!.customerAddress),
-                        TextField(
-                          controller: _controller2,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Customer Address',
-                          ),
-                        ),
-                        Text(snapshot.data!.customerEmail),
-                        TextField(
-                          controller: _controller3,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Customer Email',
-                          ),
-                        ),
-                        Text(snapshot.data!.orderName),
-                        TextField(
-                          controller: _controller4,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Order Name',
-                          ),
-                        ),
-                        Text(snapshot.data!.orderId),
-                        TextField(
-                          controller: _controller5,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Order Id',
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _futureAlbum = updateAlbum(
-                                _controller.text,
-                                _controller1.text,
-                                _controller2.text,
-                                _controller3.text,
-                                _controller4.text,
-                                _controller5.text,
-                              );
-                            });
-                          },
-                          child: const Text('Update Data'),
-                        ),
-                      ],
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-              }
-
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              'Select a Customer ID from the dropdown menu and change the customer informations.',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            DropdownButton<String>(
+              hint: const Text('Select Customer ID'),
+              value: _selectedCustomer?.id,
+              onChanged: _onCustomerSelected,
+              items: _customers.map((customer) {
+                return DropdownMenuItem<String>(
+                  value: customer.id,
+                  child: Text(customer.id),
+                );
+              }).toList(),
+            ),
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Customer Name',
+              ),
+            ),
+            TextField(
+              controller: _phoneController,
+              decoration: const InputDecoration(
+                labelText: 'Customer Phone',
+              ),
+            ),
+            TextField(
+              controller: _addressController,
+              decoration: const InputDecoration(
+                labelText: 'Customer Address',
+              ),
+            ),
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Customer Email',
+              ),
+            ),
+            TextField(
+              controller: _orderNameController,
+              decoration: const InputDecoration(
+                labelText: 'Order Name',
+              ),
+            ),
+            TextField(
+              controller: _idController,
+              decoration: const InputDecoration(
+                labelText: 'Order ID',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _updateCustomer,
+              child: const Text('Update Customer'),
+            ),
+          ],
         ),
       ),
     );

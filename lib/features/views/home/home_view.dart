@@ -1,5 +1,6 @@
 import 'package:customer_app/features/views/add_customer_view.dart';
 import 'package:customer_app/features/views/customers_view.dart';
+import 'package:customer_app/features/views/update_customers_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -54,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 16),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CustomersPage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UpdateCustomerPage()));
               },
               child: Container(
                 alignment: Alignment.center,
@@ -63,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
                   color: Colors.amber,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: const Text("Show All Customers", style: TextStyle(color: Colors.black, fontSize: 20)),
+                child: const Text("Update Customer Information", style: TextStyle(color: Colors.black, fontSize: 20)),
               ),
             ),
           ],
