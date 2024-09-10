@@ -1,4 +1,5 @@
 import 'package:customer_app/features/views/delete_customer/mixin/delete_customer_mixin.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
 class DeleteCustomerView extends StatefulWidget {
@@ -13,7 +14,7 @@ class _DeleteCustomerViewState extends State<DeleteCustomerView> with DeleteCust
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delete Customer Page'),
+        title: Text(CustomerConstants.deleteCustomerTitle),
         centerTitle: true,
       ),
       body: Padding(

@@ -1,6 +1,7 @@
 import 'package:customer_app/features/views/update_customer/update_customers_view.dart';
 import 'package:customer_app/product/models/customer_model.dart';
 import 'package:customer_app/product/repo/customer_repository.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
 mixin UpdateCustomerMixin on State<UpdateCustomersView> {
@@ -32,7 +33,7 @@ mixin UpdateCustomerMixin on State<UpdateCustomersView> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to fetch customers: $e'),
+          content: Text(CustomerConstants.errorFetchCustomer),
         ),
       );
     }
@@ -67,14 +68,14 @@ mixin UpdateCustomerMixin on State<UpdateCustomersView> {
         );
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Customer updated successfully'),
+          SnackBar(
+            content: Text(CustomerConstants.updateCustomerSuccess),
           ),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to update customer: $e'),
+            content: Text(CustomerConstants.errorUpdateCustomer),
           ),
         );
       }

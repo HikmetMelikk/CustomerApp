@@ -1,33 +1,25 @@
+import 'package:customer_app/features/views/customers/mixin/customers_mixin.dart';
 import 'package:customer_app/product/models/customer_model.dart';
-import 'package:customer_app/product/repo/customer_repository.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
-final class CustomersPage extends StatefulWidget {
-  const CustomersPage({super.key});
+final class CustomersView extends StatefulWidget {
+  const CustomersView({super.key});
 
   @override
-  State<CustomersPage> createState() => _CustomersPageState();
+  State<CustomersView> createState() => _CustomersPageState();
 }
 
-class _CustomersPageState extends State<CustomersPage> {
-  late SampleCustomersRepo _customersRepo;
-  late Future<List<Customers>> _customersFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _customersRepo = SampleCustomersRepo();
-    _customersFuture = _customersRepo.getCustomers();
-  }
-
+class _CustomersPageState extends State<CustomersView> with CustomersMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Customers'),
+        title: Text(CustomerConstants.customersTitle),
+        centerTitle: true,
       ),
       body: FutureBuilder<List<Customers>>(
-        future: _customersFuture,
+        future: customersFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -59,7 +51,7 @@ class _CustomersPageState extends State<CustomersPage> {
               padding: const EdgeInsets.all(8),
             );
           } else {
-            return const Center(child: Text('No customers found'));
+            return Center(child: Text(CustomerConstants.errorCustomerNotFound));
           }
         },
       ),

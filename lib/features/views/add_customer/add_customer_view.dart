@@ -1,4 +1,5 @@
 import 'package:customer_app/features/views/add_customer/mixin/add_customer_mixin.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
 class AddCustomerView extends StatefulWidget {
@@ -16,9 +17,7 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Customer Page',
-        ),
+        title: Text(CustomerConstants.addCustomerTitle),
         centerTitle: true,
       ),
       body: Padding(
@@ -28,32 +27,38 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: 'Enter Customer Name', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextName, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(labelText: 'Enter Customer Phone', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextPhone, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: addressController,
-              decoration: const InputDecoration(labelText: 'Enter Customer Address', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextAddress, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: 'Enter Customer E-mail', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextEmail, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: orderNameController,
-              decoration: const InputDecoration(labelText: 'Enter Order Name', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextOrderName, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: idController,
-              decoration: const InputDecoration(labelText: 'Enter Order Id', border: OutlineInputBorder()),
+              decoration:
+                  InputDecoration(labelText: CustomerConstants.labelTextOrderId, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             GestureDetector(
@@ -69,9 +74,9 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
                   border: Border.all(color: Colors.black),
                 ),
                 padding: const EdgeInsets.all(16),
-                child: const Text(
-                  'Create a New Customer',
-                  style: TextStyle(fontSize: 18),
+                child: Text(
+                  CustomerConstants.addCustomerText,
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
@@ -86,9 +91,9 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Customer added successfully'),
-                          duration: Duration(seconds: 3),
+                        SnackBar(
+                          content: Text(CustomerConstants.addCustomerSuccess),
+                          duration: const Duration(seconds: 3),
                         ),
                       );
                       nameController.clear();

@@ -1,6 +1,7 @@
 import 'package:customer_app/features/views/delete_customer/delete_customer_view.dart';
 import 'package:customer_app/product/models/customer_model.dart';
 import 'package:customer_app/product/repo/customer_repository.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
 mixin DeleteCustomerMixin on State<DeleteCustomerView> {
@@ -23,7 +24,7 @@ mixin DeleteCustomerMixin on State<DeleteCustomerView> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to fetch customers: $e'),
+          content: Text(CustomerConstants.errorFetchCustomer),
         ),
       );
     }
@@ -34,15 +35,15 @@ mixin DeleteCustomerMixin on State<DeleteCustomerView> {
       await _customerRepo.deleteCustomer(customerId);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Customer deleted successfully'),
+        SnackBar(
+          content: Text(CustomerConstants.deleteCustomerSuccess),
         ),
       );
       _fetchCustomers(); // Refresh the customer list
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to delete customer: $e'),
+          content: Text(CustomerConstants.errorDeleteCustomer),
         ),
       );
     }
@@ -53,8 +54,8 @@ mixin DeleteCustomerMixin on State<DeleteCustomerView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
-          content: const Text('Are you sure you want to delete this customer?'),
+          title: Text(CustomerConstants.confirmDeleteCustomer),
+          content: Text(CustomerConstants.confirmDeleteCustomerMessage),
           actions: [
             TextButton(
               onPressed: () {

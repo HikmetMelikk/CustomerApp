@@ -1,6 +1,7 @@
 import 'package:customer_app/features/views/add_customer/add_customer_view.dart';
 import 'package:customer_app/product/models/customer_model.dart';
 import 'package:customer_app/product/repo/customer_repository.dart';
+import 'package:customer_app/product/utilities/constants/customer_constants.dart';
 import 'package:flutter/material.dart';
 
 mixin AddCustomerMixin on State<AddCustomerView> {
@@ -34,7 +35,7 @@ mixin AddCustomerMixin on State<AddCustomerView> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to add customer: $e'),
+          content: Text(CustomerConstants.errorMessage),
         ),
       );
     }
