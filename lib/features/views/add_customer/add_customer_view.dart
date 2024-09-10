@@ -28,32 +28,32 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(hintText: 'Enter Customer Name', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Customer Name', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(hintText: 'Enter Customer Phone', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Customer Phone', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: addressController,
-              decoration: const InputDecoration(hintText: 'Enter Customer Address', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Customer Address', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(hintText: 'Enter Customer E-mail', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Customer E-mail', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: orderNameController,
-              decoration: const InputDecoration(hintText: 'Enter Order Name', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Order Name', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: idController,
-              decoration: const InputDecoration(hintText: 'Enter Order Id', border: OutlineInputBorder()),
+              decoration: const InputDecoration(labelText: 'Enter Order Id', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
             GestureDetector(
