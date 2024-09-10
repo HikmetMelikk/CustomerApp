@@ -26,6 +26,7 @@ class _UpdateCustomersViewState extends State<UpdateCustomersView> with UpdateCu
               'Select a Customer ID from the dropdown menu and change the customer informations.',
               style: Theme.of(context).textTheme.titleMedium,
             ),
+            const SizedBox(height: 10),
             DropdownButton<String>(
               hint: const Text('Select Customer ID'),
               value: selectedCustomer?.id,
@@ -37,42 +38,37 @@ class _UpdateCustomersViewState extends State<UpdateCustomersView> with UpdateCu
                 );
               }).toList(),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Customer Name',
-              ),
+              decoration: const InputDecoration(labelText: 'Customer Name', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Customer Phone',
-              ),
+              decoration: const InputDecoration(labelText: 'Customer Phone', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: addressController,
-              decoration: const InputDecoration(
-                labelText: 'Customer Address',
-              ),
+              decoration: const InputDecoration(labelText: 'Customer Address', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Customer Email',
-              ),
+              decoration: const InputDecoration(labelText: 'Customer Email', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: orderNameController,
-              decoration: const InputDecoration(
-                labelText: 'Order Name',
-              ),
+              decoration: const InputDecoration(labelText: 'Order Name', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: idController,
-              decoration: const InputDecoration(
-                labelText: 'Order ID',
-              ),
+              decoration: const InputDecoration(labelText: 'Order ID', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: updateCustomer,
               child: const Text('Update Customer'),
