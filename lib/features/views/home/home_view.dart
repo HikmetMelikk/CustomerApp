@@ -1,6 +1,6 @@
-import 'package:customer_app/features/views/add_customer_view.dart';
+import 'package:customer_app/features/views/add_customer/add_customer_view.dart';
 import 'package:customer_app/features/views/customers_view.dart';
-import 'package:customer_app/features/views/update_customers_page.dart';
+import 'package:customer_app/features/views/update_customer/update_customers_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 16),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UpdateCustomerPage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UpdateCustomersView()));
               },
               child: Container(
                 alignment: Alignment.center,
