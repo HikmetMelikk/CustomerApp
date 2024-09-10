@@ -16,10 +16,11 @@ class _UpdateCustomersViewState extends State<UpdateCustomersView> with UpdateCu
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Update Customer Page')),
+        title: const Text('Update Customer Page'),
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Text(
@@ -27,16 +28,23 @@ class _UpdateCustomersViewState extends State<UpdateCustomersView> with UpdateCu
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 10),
-            DropdownButton<String>(
-              hint: const Text('Select Customer ID'),
-              value: selectedCustomer?.id,
-              onChanged: onCustomerSelected,
-              items: customersList.map((customer) {
-                return DropdownMenuItem<String>(
-                  value: customer.id,
-                  child: Text(customer.id),
-                );
-              }).toList(),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              padding: const EdgeInsets.all(8),
+              child: DropdownButton<String>(
+                hint: const Text('Select Customer ID'),
+                value: selectedCustomer?.id,
+                onChanged: onCustomerSelected,
+                items: customersList.map((customer) {
+                  return DropdownMenuItem<String>(
+                    value: customer.id,
+                    child: Text(customer.id),
+                  );
+                }).toList(),
+              ),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -69,9 +77,24 @@ class _UpdateCustomersViewState extends State<UpdateCustomersView> with UpdateCu
               decoration: const InputDecoration(labelText: 'Order ID', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: updateCustomer,
-              child: const Text('Update Customer'),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  updateCustomer();
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: Colors.black),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: const Text(
+                  'Update Customer Information',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
           ],
         ),

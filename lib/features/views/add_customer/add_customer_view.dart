@@ -64,7 +64,7 @@ class _MyAppState extends State<AddCustomerView> with AddCustomerMixin {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.limeAccent,
+                  color: Colors.amber,
                   borderRadius: BorderRadius.circular(6),
                   border: Border.all(color: Colors.black),
                 ),

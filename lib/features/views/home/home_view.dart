@@ -1,5 +1,6 @@
 import 'package:customer_app/features/views/add_customer/add_customer_view.dart';
 import 'package:customer_app/features/views/customers_view.dart';
+import 'package:customer_app/features/views/delete_customer/delete_customer_view.dart';
 import 'package:customer_app/features/views/update_customer/update_customers_view.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +66,21 @@ class _HomeViewState extends State<HomeView> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Text("Update Customer Information", style: TextStyle(color: Colors.black, fontSize: 20)),
+              ),
+            ),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DeleteCustomerView()));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: const Text("Delete Customer ", style: TextStyle(color: Colors.black, fontSize: 20)),
               ),
             ),
           ],

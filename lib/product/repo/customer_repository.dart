@@ -9,6 +9,7 @@ abstract class CustomerRepo {
       String orderName, String orderId);
   Future<Customers> updateCustomer(String customerId, String customerName, String customerPhone, String customerAddress,
       String customerEmail, String orderName, String orderId);
+  Future<void> deleteCustomer(String customerId);
 }
 
 final class SampleCustomersRepo implements CustomerRepo {
@@ -52,7 +53,7 @@ final class SampleCustomersRepo implements CustomerRepo {
   Future<Customers> updateCustomer(String customerId, String customerName, String customerPhone, String customerAddress,
       String customerEmail, String orderName, String orderId) async {
     final response = await http.put(
-      Uri.parse('${CustomerConstants.baseUrl}/$customerId'), // Append customerId to the URL
+      Uri.parse('${CustomerConstants.baseUrl}/$customerId'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(<String, String>{
         'customerName': customerName,
@@ -69,6 +70,18 @@ final class SampleCustomersRepo implements CustomerRepo {
       return Customers.fromJson(data);
     } else {
       throw NetworkError('Failed to update customer');
+    }
+  }
+
+  @override
+  Future<void> deleteCustomer(String customerId) async {
+    final response = await http.delete(
+      Uri.parse('${CustomerConstants.baseUrl}/$customerId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode != 200) {
+      throw NetworkError('Failed to delete customer');
     }
   }
 }

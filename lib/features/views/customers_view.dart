@@ -44,19 +44,19 @@ class _CustomersPageState extends State<CustomersPage> {
                     ListTile(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
-                        side: const BorderSide(color: Colors.blue),
+                        side: const BorderSide(color: Colors.black),
                       ),
                       title: Text(
                         customer.customerName,
                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(customer.customerEmail, style: const TextStyle(fontSize: 16)),
+                      subtitle: Text(customer.orderName, style: const TextStyle(fontSize: 16)),
                     ),
                     const SizedBox(height: 8),
                   ],
                 );
               },
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(8),
             );
           } else {
             return const Center(child: Text('No customers found'));
